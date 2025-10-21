@@ -1,0 +1,149 @@
+site_name: pyDOE3
+site_description: Design of experiments for Python
+# site_url: https://pydoe3.readthedocs.io/
+docs_dir: mkd-docs
+site_dir: docs
+
+repo_name: relf/pydoe3
+repo_url: https://github.com/relf/pydoe3
+# edit_uri: edit/master/mkd-docs/docs/
+
+# Copyright
+copyright: Copyright &copy; 2013–2025 Abraham Lee
+
+# Configuration
+theme:
+  name: material
+  language: en
+
+  # Theme features
+  features:
+    # content features
+    - content.code.copy # https://squidfunk.github.io/mkdocs-material/reference/code-blocks/?h=code+copy#code-copy-button
+    - content.code.annotate # https://squidfunk.github.io/mkdocs-material/reference/code-blocks/#code-annotations
+    # navigation features
+    - navigation.instant # https://squidfunk.github.io/mkdocs-material/setup/setting-up-navigation/?h=navigation+instant#instant-loading
+    - navigation.instant.progress # https://squidfunk.github.io/mkdocs-material/setup/setting-up-navigation/?h=navigation+instant#progress-indicator
+    - navigation.tracking # https://squidfunk.github.io/mkdocs-material/setup/setting-up-navigation/?h=navigation+instant#anchor-tracking
+    - navigation.tabs # https://squidfunk.github.io/mkdocs-material/setup/setting-up-navigation/?h=navigation+instant#navigation-tabs
+    - navigation.tabs.sticky # https://squidfunk.github.io/mkdocs-material/setup/setting-up-navigation/?h=navigation+instant#sticky-navigation-tabs
+    - navigation.sections # https://squidfunk.github.io/mkdocs-material/setup/setting-up-navigation/?h=navigation+instant#navigation-sections
+    - navigation.indexes # https://squidfunk.github.io/mkdocs-material/setup/setting-up-navigation/?h=navigation+instant#section-index-pages
+    - toc.follow # https://squidfunk.github.io/mkdocs-material/setup/setting-up-navigation/?h=navigation+instant#anchor-following
+    - navigation.top # https://squidfunk.github.io/mkdocs-material/setup/setting-up-navigation/?h=navigation+instant#back-to-top-button
+    # search features
+    - search.suggest # https://squidfunk.github.io/mkdocs-material/setup/setting-up-site-search/?h=search+highlight#search-suggestions
+    - search.highlight # https://squidfunk.github.io/mkdocs-material/setup/setting-up-site-search/?h=search+highlight#search-highlighting
+    - search.share # https://squidfunk.github.io/mkdocs-material/setup/setting-up-site-search/?h=search+highlight#search-sharing
+
+  # Palette configuration
+  palette:
+    - scheme: default
+      primary: blue grey
+      accent: black
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    - scheme: slate
+      primary: blue grey
+      accent: white
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+
+  # Logo and favicon
+  favicon: assets/images/favicon.ico
+  logo: assets/images/pydoe-white-4x.svg
+
+  # Font configuration
+  font:
+    text: Roboto
+    code: Roboto Mono
+
+# Navigation structure
+nav:
+  - Get Started:
+    - index.md
+    - Why use pyDOE: why.md
+    - Installation: installation.md
+    - Changelog: changelog.md
+    - Contributing: contributing.md
+    - FAQ: faq.md
+    - License: license.md
+    - Credits: credits.md
+  - API Reference:
+    - Factorial Design:
+        - Full Factorial: api/full-factorial.md
+        - Fractional Factorial: api/fractional-factorial.md
+  - Factorial Designs: factorial.md
+  - Response Surface Designs: rsm.md
+  - Randomized Designs: randomized.md
+  - Low-Discrepancy Sequences: low_discrepancy_sequences.md
+  - Sampling Designs: sampling_designs.md
+  - Taguchi Designs: taguchi.md
+  - Optimal Designs: doe_optimal.md
+
+plugins:
+  - search: # https://squidfunk.github.io/mkdocs-material/plugins/search
+  - minify: # https://github.com/byrnereese/mkdocs-minify-plugin
+      minify_html: true
+  - mkdocstrings:
+      handlers:
+        python:
+          inventories:
+            - https://docs.python.org/3/objects.inv
+            - https://numpy.org/doc/stable/objects.inv
+          options:
+            docstring_style: numpy        # Important for NumPy-style docstrings
+            show_source: true             # Show source link
+            docstring_section_style: table
+            signature_crossrefs: true
+            show_signature_annotations: true
+            show_root_heading: true
+            unwrap_annotated: true
+            summary: true
+
+markdown_extensions:
+  - tables
+  - toc:
+      permalink: true
+      title: Page contents
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.highlight:
+      pygments_lang_class: true
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.arithmatex:
+      generic: true
+
+watch:
+  - pyDOE3
+
+extra_css:    # https://squidfunk.github.io/mkdocs-material/customization/#additional-css
+  - assets/stylesheets/extra.css
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/relf/pydoe3
+    - icon: fontawesome/brands/python
+      link: https://pypi.org/project/pyDOE3/
+
+extra_javascript:
+  - https://polyfill.io/v3/polyfill.min.js?features=es6
+  - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
+
+validation:
+  nav:
+    omitted_files: warn
+    not_found: warn
+    absolute_links: warn
+  links:
+    not_found: warn
+    anchors: ignore  # TODO: we need to fix the anchors
+    unrecognized_links: warn
