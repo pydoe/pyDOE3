@@ -1,4 +1,4 @@
-"""
+r"""
 Optimal Experimental Design (OED)
 =================================
 
@@ -45,12 +45,12 @@ Example:
 >>>
 >>> # Create optimal design
 >>> design, info = optimal_design(
-...     candidates=candidates,
-...     n_points=10,
-...     degree=2,
-...     criterion="D",
-...     method="detmax"
-... )
+        candidates=candidates,
+        n_points=10,
+        degree=2,
+        criterion="D",
+        method="detmax"
+    )
 """
 
 from pyDOE3.doe_optimal.optimal import optimal_design

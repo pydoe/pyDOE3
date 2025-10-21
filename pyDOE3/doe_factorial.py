@@ -20,6 +20,7 @@ import string
 
 import numpy as np
 from scipy.special import binom
+from numpy.typing import ArrayLike, NDArray
 
 __all__ = [
     "fullfact",
@@ -32,25 +33,23 @@ __all__ = [
 ]
 
 
-def fullfact(levels):
+def fullfact(levels: ArrayLike) -> NDArray:
     """
     Create a general full-factorial design
 
     Parameters
     ----------
-    levels : array-like
+    levels : ArrayLike
         An array of integers that indicate the number of levels of each input
         design factor.
 
     Returns
     -------
-    mat : 2d-array
-        The design matrix with coded levels 0 to k-1 for a k-level factor
+    mat : NDArray
+        The 2D design matrix with coded levels 0 to k-1 for a k-level factor
 
     Example
     -------
-    ::
-
         >>> fullfact([2, 4, 3])
         array([[0., 0., 0.],
                [1., 0., 0.],
@@ -76,7 +75,6 @@ def fullfact(levels):
                [1., 2., 2.],
                [0., 3., 2.],
                [1., 3., 2.]])
-
     """
     n = len(levels)  # number of factors
     nb_lines = np.prod(levels)  # number of trial conditions
@@ -96,24 +94,22 @@ def fullfact(levels):
     return H
 
 
-def ff2n(n_factors: int) -> np.ndarray:
+def ff2n(n_factors: int) -> NDArray:
     """
     Create a 2-Level full-factorial design
 
     Parameters
     ----------
-    n : int
+    n_factors : int
         The number of factors in the design.
 
     Returns
     -------
-    mat : 2d-array
-        The design matrix with coded levels -1 and 1
+    mat : NDArray
+        The 2D design matrix with coded levels -1 and 1
 
     Example
     -------
-    ::
-
         >>> ff2n(3)
         array([[-1., -1., -1.],
                [-1., -1.,  1.],
@@ -176,7 +172,7 @@ def validate_generator(n_factors: int, generator: str) -> str:
     return generator
 
 
-def fracfact(gen) -> np.ndarray:
+def fracfact(gen: str) -> NDArray:
     """
     Create a 2-level fractional-factorial design with a generator string.
 
@@ -188,14 +184,14 @@ def fracfact(gen) -> np.ndarray:
 
     Returns
     -------
-    H : 2d-array
-        A m-by-n matrix, the fractional factorial design. m is 2^k, where k
-        is the number of letters in ``gen``, and n is the total number of
-        entries in ``gen``.
+    H : NDArray
+        A `m-by-n` matrix, the fractional factorial design. m is 2^k, where k
+        is the number of letters in `gen`, and n is the total number of
+        entries in `gen`.
 
     Notes
     -----
-    In ``gen`` we define the main factors of the experiment and the factors
+    In `gen` we define the main factors of the experiment and the factors
     whose levels are the products of the main factors. For example, if
 
         gen = "a b ab"
@@ -221,10 +217,8 @@ def fracfact(gen) -> np.ndarray:
     then columns H[:, 0], H[:, 1], and H[:, 3] include the two level full
     factorial design and H[:, 2] includes the products of the main factors.
 
-    Examples
+    Example
     --------
-    ::
-
         >>> fracfact("a b ab")
         array([[-1., -1.,  1.],
                [-1.,  1., -1.],
@@ -285,7 +279,7 @@ def fracfact(gen) -> np.ndarray:
     return H
 
 
-def fracfact_by_res(n, res):
+def fracfact_by_res(n: int, res: int) -> NDArray:
     """
     Create a 2-level fractional factorial design with `n` factors
     and resolution `res`.
@@ -299,8 +293,8 @@ def fracfact_by_res(n, res):
 
     Returns
     -------
-    H : 2d-array
-        A m-by-`n` matrix, the fractional factorial design. m is the
+    H : NDArray
+        A `m-by-n` matrix, the fractional factorial design. m is the
         minimal amount of rows possible for creating a fractional
         factorial design matrix at resolution `res`
 
@@ -334,9 +328,8 @@ def fracfact_by_res(n, res):
          interactions. Three-factor interactions may be confounded with
          each other.
 
-    Examples
+    Example
     --------
-    ::
         >>> fracfact_by_res(6, 3)
         array([[-1., -1., -1.,  1.,  1.,  1.],
                [-1., -1.,  1.,  1., -1., -1.],
@@ -406,7 +399,7 @@ def _n_fac_at_res(n, res):
 ################################################################################
 
 
-def fracfact_opt(n_factors, n_erased, max_attempts=0):
+def fracfact_opt(n_factors: int, n_erased: int, max_attempts: int = 0) -> tuple[str, list[str], NDArray]:
     """
     Find the optimal generator string for a 2-level fractional-factorial design
     with the specified number of factors and erased factors.
@@ -430,10 +423,10 @@ def fracfact_opt(n_factors, n_erased, max_attempts=0):
         A generator string in the format expected by fracfact() with the 2^k-p
         design, where k=n_factors and p=n_erased. The design disallows aliasing
         of main factors, and minimizes aliasing of low-order interactions.
-    alias_map : list of str
+    alias_map : list[str]
         The map of aliases that the design inflicts.
         More details in fracfact_aliasing().
-    alias_vector : 1d numpy.array
+    alias_vector : NDArray
         The vector with the cost of the design in term of aliasings.
         More details in fracfact_aliasing().
     """

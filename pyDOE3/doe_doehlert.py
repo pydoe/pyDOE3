@@ -81,7 +81,7 @@ def doehlert_shell_design(num_factors, num_center_points=1):
 
 
 def doehlert_simplex_design(num_factors):
-    """
+    r"""
     Generate a Doehlert design matrix using a simplex-based approach.
 
     Parameters
